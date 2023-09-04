@@ -52,7 +52,7 @@ The disassembly of the standard proxy contract code:
 | [05] | 5f     | PUSH0          | 0 0                |
 | [06] | 36     | CALLDATASIZE   | cds 0 0            |
 | [07] | 5f     | PUSH0          | 0 cds 0 0          |
-| [08] | 73bebe.| PUSH20         | 0xbebe. 0 cds 0 0  |
+| [08] | 73bebe.| PUSH20 0xbebe. | 0xbebe. 0 cds 0 0  |
 | [1d] | 5a     | GAS            | gas 0xbebe. 0 cds 0 0|
 | [1e] | f4     | DELEGATECALL   | suc                |
 | [1f] | 3d     | RETURNDATASIZE | rds suc            |
@@ -62,7 +62,7 @@ The disassembly of the standard proxy contract code:
 | [23] | 5f     | PUSH0          | 0 suc              |
 | [24] | 3d     | RETURNDATASIZE | rds 0 suc          |
 | [25] | 91     | SWAP2          | suc 0 rds          |
-| [26] | 602a   | PUSH1          | 0x2a suc 0 rds     |
+| [26] | 602a   | PUSH1 0x2a     | 0x2a suc 0 rds     |
 | [27] | 57     | JUMPI          | 0 rds              |
 | [29] | fd     | REVERT         |                    |
 | [2a] | 5b     | JUMPDEST       | 0 rds              |
@@ -160,7 +160,7 @@ To forward the calldata to the delegate call, we need to prepare arguments for t
 | [05] | 5f     | PUSH0          | 0 0                |
 | [06] | 36     | CALLDATASIZE   | cds 0 0            |
 | [07] | 5f     | PUSH0          | 0 cds 0 0          |
-| [08] | 73bebe.| PUSH20         | 0xbebe. 0 cds 0 0  |
+| [08] | 73bebe.| PUSH20 0xbebe. | 0xbebe. 0 cds 0 0  |
 | [1d] | 5a     | GAS            | gas 0xbebe. 0 cds 0 0|
 | [1e] | f4     | DELEGATECALL   | suc                |
 ```
@@ -190,7 +190,7 @@ Lastly we need to return the data or revert the transaction based on whether the
 | [23] | 5f     | PUSH0          | 0 suc              |
 | [24] | 3d     | RETURNDATASIZE | rds 0 suc          |
 | [25] | 91     | SWAP2          | suc 0 rds          |
-| [26] | 602a   | PUSH1          | 0x2a suc 0 rds     |
+| [26] | 602a   | PUSH1 0x2a     | 0x2a suc 0 rds     |
 | [27] | 57     | JUMPI          | 0 rds              |
 | [29] | fd     | REVERT         |                    |
 | [2a] | 5b     | JUMPDEST       | 0 rds              |
