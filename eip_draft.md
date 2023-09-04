@@ -30,7 +30,7 @@ This standard trys to mimnimize the Minimal Proxy Contract with the newly added 
 
 ### Standard Proxy Contract
 
-The exact runtime code for the standard proxy contract with `PUSH0` is: 
+The exact runtime code for the minimal proxy contract with `PUSH0` is: 
 
 ```
 365f5f375f5f365f73bebebebebebebebebebebebebebebebebebebebe5af43d5f5f3e5f3d91602a57fd5bf3
@@ -38,7 +38,7 @@ The exact runtime code for the standard proxy contract with `PUSH0` is:
 
 wherein the bytes at indices 9 - 28 (inclusive) are replaced with the 20 byte address of the master implementation contract. The length of the runtime code is `44` bytes.
 
-The disassembly of the standard proxy contract code:
+The disassembly of the new minimal proxy contract code:
 
 ```shell
  pc 	op	    opcode		    stack
@@ -70,7 +70,7 @@ The disassembly of the standard proxy contract code:
 
 ### Minimal Creation Code
 
-The minimal creation code of the standard proxy contract is:
+The minimal creation code of the minimal proxy contract is:
 
 ```
 602c8060095f395ff3365f5f375f5f365f73bebebebebebebebebebebebebebebebebebebebe5af43d5f5f3e5f3d91602a57fd5bf3
@@ -82,11 +82,11 @@ where the first 9 bytes are the initcode:
 602c8060095f395ff3
 ```
 
-And the rest are runtime/contract code of the standard proxy. The length of the creation code is `53` bytes.
+And the rest are runtime/contract code of the proxy. The length of the creation code is `53` bytes.
 
 ### Deploy with Solidity
 
-The standard minimal contract can be deployed with Solidity using underlying contract:
+The minimal proxy contract can be deployed with Solidity using underlying contract:
 
 ```solidity
 // SPDX-License-Identifier: MIT
