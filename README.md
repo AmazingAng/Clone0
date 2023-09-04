@@ -41,6 +41,7 @@ wherein the bytes at indices 9 - 28 (inclusive) are replaced with the 20 byte ad
 
 The disassembly of the standard proxy contract code:
 
+```shell
 | pc   | op     | opcode         | stack              |
 |------|--------|----------------|--------------------|
 | [00] | 36     | CALLDATASIZE   | cds                |
@@ -66,6 +67,7 @@ The disassembly of the standard proxy contract code:
 | [29] | fd     | REVERT         |                    |
 | [2a] | 5b     | JUMPDEST       | 0 rds              |
 | [2b] | f3     | RETURN         |                    |
+```
 
 ### Minimal Creation Code
 
@@ -138,12 +140,14 @@ The contract is built from [first principals](https://blog.openzeppelin.com/deep
 
 To copy the calldata, we need to provide the arguments for the `CALLDATACOPY` opcodes, which are `[0, 0, cds]`, where `cds` represents calldata size.
 
+```shell
 | pc   | op     | opcode         | stack              |
 |------|--------|----------------|--------------------|
 | [00] | 36     | CALLDATASIZE   | cds                |
 | [01] | 5f     | PUSH0          | 0 cds              |
 | [02] | 5f     | PUSH0          | 0 0 cds            |
 | [03] | 37     | CALLDATACOPY   |                    |
+```
 
 ### Step 2: Delegatecall
 
