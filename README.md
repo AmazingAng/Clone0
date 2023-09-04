@@ -213,8 +213,6 @@ Because the new proxy contract standard uses the `PUSH0` opcode, it can only be 
 
 The new proxy contract standard is identical to the previous one (eip-1167). Here are the security considerations when using minimal proxy contracts:
 
-Certainly, here's a concise summary of the security considerations for Minimal Proxy Contracts:
-
 **Security Considerations for Minimal Proxy Contracts:**
 
 1. **Non-Upgradability**: Minimal Proxy Contracts delegate their logic to another contract (often termed the "implementation" or "logic" contract). This delegation is fixed upon deployment, meaning you can't change which implementation contract the proxy delegates to after its creation.
