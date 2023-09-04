@@ -1,6 +1,18 @@
-## Minimal Proxy Contract with `PUSH0`
+# Minimal Proxy Contract with `PUSH0`
 
-**Minimal Proxy Contract with `PUSH0`, or `Clone0` in short, optimize the previous minimal proxy contract ([eip-3855](https://eips.ethereum.org/EIPS/eip-3855)) by 200 gas at deployment, 5 gas at runtime, while remain the same functionalities.**
+Author: 0xAA ([@AmazingAng](https://github.com/AmazingAng))
+
+Created: 2023-09-04
+
+Requires: [EIP-7](https://eips.ethereum.org/EIPS/eip-7), [EIP-211](https://eips.ethereum.org/EIPS/eip-211), [EIP-1167](https://eips.ethereum.org/EIPS/eip-1167), [EIP-3855](https://eips.ethereum.org/EIPS/eip-3855)
+
+## Simple Summary
+
+With the newly introduced `PUSH0` opcode ([eip-3855](https://eips.ethereum.org/EIPS/eip-3855)) at Shanghai Upgrade, we minimized the previous Minimal Proxy Contract ([eip-1167](https://eips.ethereum.org/EIPS/eip-1167)) by 200 gas at deployment and 5 gas at runtime, while remain the same functionalities.
+
+## Abstract
+
+Use `PUSH0` opcode minimize gas cost of the previous Minimal Proxy Contract, which simply and cheaply clone contract functionality in an immutable way.
 
 ## Motivation
 
@@ -9,23 +21,6 @@ This standard trys to mimnimize the Minimal Proxy Contract with the newly added 
 1. Reduce the contract bytecode size by `1` byte by removing a redundant `SWAP` opcode.
 2. Reduce the runtime gas by replacing two `DUP` (cost `3` gas each) to two `PUSH0` (cost `2` gas each).
 3. Increase the readability of the proxy contract by redesigning it from first principles with `PUSH0`.
-
-## Test Cases
-
-Test cases are performed using Foundry, which include:
-
-- invocation with no arguments.
-- invocation with arguments.
-- invocation with fixed length return values
-- invocation with variable length return values
-- invocation with revert
-- deploy with minimal creation code (tested on Goerli testnet, [link](https://goerli.etherscan.io/address/0xb4f95ad6256a27a5629d9c4c71bff02bc373c9be#code))
-
-You need to install [foundry](https://book.getfoundry.sh/getting-started/installation) to run the following test command:
-
-```
-forge test
-```
 
 ## Specification
 
@@ -125,11 +120,9 @@ contract Clone0Factory {
 }
 ```
 
-This contract can also be found [here](./src/Clone0Factory.sol).
-
 ## Rationale
 
-The contract is built from [first principals](https://blog.openzeppelin.com/deep-dive-into-the-minimal-proxy-contract) utilizing the newly introduced `PUSH0` opcode. The essential components of the minimal proxy includes:
+The contract is built from [first principals](https://blog.openzeppelin.com/deep-dive-into-the-minimal-proxy-contract) utilizing the newly introduced `PUSH0` opcode. The essential components of the minimal proxy are:
 
 1. Copy the calldata with `CALLDATACOPY`.
 2. Forward the calldata to the implementation contract using `DELEGATECALL`.
@@ -197,27 +190,32 @@ In the end, we arrived at the runtime code for Minimal Proxy Contract with `PUSH
 365f5f375f5f365f73bebebebebebebebebebebebebebebebebebebebe5af43d5f5f3e5f3d91602a57fd5bf3
 ```
 
-The length of the runtime code is `44` bytes, which reduced `1` byte from the previous Minimal Proxy Contract. Moreover, it replaced the `RETURNDATASIZE` and `DUP` operations to `PUSH0`, which saves gas and increase the readability of the code. In summary, the Minimal Proxy Contract with `PUSH0` reduce `200` gas at deployment and `5` gas at runtime.
+The length of the runtime code is `44` bytes, which reduced `1` byte from the previous Minimal Proxy Contract. Moreover, it replaced the `RETURNDATASIZE` and `DUP` operations with `PUSH0`, which saves gas and increase the readability of the code. In summary, the new Minimal Proxy Contract reduce `200` gas at deployment and `5` gas at runtime, while remain the same functionalities as the old one.
 
 ##  Backwards Compatibility
 
-Because the new proxy contract standard uses `PUSH0` opcode, it can only be used after Shanghai Upgrade, otherwise, the contract cannot be deployed.
+Because the new minimal proxy contract uses `PUSH0` opcode, it can only be deployed after Shanghai Upgrade. It behaves the same as previous Minimal Proxy Contract.
 
-## Security Considerations
+##  Test Cases
 
-The new proxy contract standard behaves exactly the same as the previous one (eip-3855). Here are the security considerations when using minimal proxy contracts:
+Test cases are performed using Foundry, which include:
 
-Certainly, here's a concise summary of the security considerations for Minimal Proxy Contracts:
+- invocation with no arguments.
+- invocation with arguments.
+- invocation with fixed length return values
+- invocation with variable length return values
+- invocation with revert
+- deploy with minimal creation code (tested on Goerli testnet, [link](https://goerli.etherscan.io/address/0xb4f95ad6256a27a5629d9c4c71bff02bc373c9be#code))
 
-**Security Considerations for Minimal Proxy Contracts:**
+Tests for these cases are included in the GitHub repo [Minimal Proxy PUSH0](https://github.com/AmazingAng/Minimal-Proxy-PUSH0).
 
-1. **Non-Upgradability**: Minimal Proxy Contracts delegate their logic to another contract (often termed the "implementation" or "logic" contract). This delegation is fixed upon deployment, meaning you can't change which implementation contract the proxy delegates to after its creation.
-   
-2. **Initialization Concerns**: Proxy contracts lack constructors, so you need to use an initialization function after deployment. Skipping this step could leave the contract unsafe.
+## Reference Implementation
 
-3. **Safety of Logic Contract**: Vulnerabilities in the logic contract affect all associated proxy contracts.
+[Minimal Proxy PUSH0](https://github.com/AmazingAng/Minimal-Proxy-PUSH0)
 
-4. **Transparency Issues**: Because of its complexity, users might see the proxy as an empty contract, making it challenging to trace back to the actual logic contract.
+## Copyright
+
+Copyright and related rights waived via [CC0](https://github.com/ethereum/EIPs/blob/LICENSE.md).
 
 ## Reference
 
