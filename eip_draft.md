@@ -41,31 +41,31 @@ wherein the bytes at indices 9 - 28 (inclusive) are replaced with the 20 byte ad
 The disassembly of the new minimal proxy contract code:
 
 ```shell
- pc 	op	    opcode		    stack
-----    ------  ------------	--------------	
-[00]	36	    CALLDATASIZE	cds
-[01]	5f	    PUSH0		    0 cds
-[02]	5f	    PUSH0		    0 0 cds
-[03]	37	    CALLDATACOPY	
-[04]	5f	    PUSH0		    0
-[05]	5f	    PUSH0		    0 0
-[06]	36	    CALLDATASIZE	cds 0 0
-[07]	5f	    PUSH0		    0 cds 0 0
-[08]	73bebe.	PUSH20 0xbebe.	0xbebe. 0 cds 0 0
-[1d]	5a	    GAS	            gas 0xbebe. 0 cds 0 0
-[1e]	f4	    DELEGATECALL	suc
-[1f]	3d	    RETURNDATASIZE	rds suc
-[20]	5f	    PUSH0		    0 rds suc
-[21]	5f	    PUSH0		    0 0 rds suc
-[22]	3e	    RETURNDATACOPY	suc
-[23]	5f	    PUSH0		    0 suc
-[24]	3d	    RETURNDATASIZE	rds 0 suc
-[25]	91	    SWAP2		    suc 0 rds
-[26]	602a	PUSH1 0x2a	    0x2a suc 0 rds
-[27]	57	    JUMPI		    0 rds
-[29]	fd	    REVERT
-[2a]	5b	    JUMPDEST		0 rds
-[2b]	f3	    RETURN	
+| pc   | op     | opcode         | stack              |
+|------|--------|----------------|--------------------|
+| [00] | 36     | CALLDATASIZE   | cds                |
+| [01] | 5f     | PUSH0          | 0 cds              |
+| [02] | 5f     | PUSH0          | 0 0 cds            |
+| [03] | 37     | CALLDATACOPY   |                    |
+| [04] | 5f     | PUSH0          | 0                  |
+| [05] | 5f     | PUSH0          | 0 0                |
+| [06] | 36     | CALLDATASIZE   | cds 0 0            |
+| [07] | 5f     | PUSH0          | 0 cds 0 0          |
+| [08] | 73bebe.| PUSH20         | 0xbebe. 0 cds 0 0  |
+| [1d] | 5a     | GAS            | gas 0xbebe. 0 cds 0 0|
+| [1e] | f4     | DELEGATECALL   | suc                |
+| [1f] | 3d     | RETURNDATASIZE | rds suc            |
+| [20] | 5f     | PUSH0          | 0 rds suc          |
+| [21] | 5f     | PUSH0          | 0 0 rds suc        |
+| [22] | 3e     | RETURNDATACOPY | suc                |
+| [23] | 5f     | PUSH0          | 0 suc              |
+| [24] | 3d     | RETURNDATASIZE | rds 0 suc          |
+| [25] | 91     | SWAP2          | suc 0 rds          |
+| [26] | 602a   | PUSH1          | 0x2a suc 0 rds     |
+| [27] | 57     | JUMPI          | 0 rds              |
+| [29] | fd     | REVERT         |                    |
+| [2a] | 5b     | JUMPDEST       | 0 rds              |
+| [2b] | f3     | RETURN         |                    |
 ```
 
 ### Minimal Creation Code
@@ -138,12 +138,12 @@ The contract is built from [first principals](https://blog.openzeppelin.com/deep
 To copy the calldata, we need to provide the arguments for the `CALLDATACOPY` opcodes, which are `[0, 0, cds]`, where `cds` represents calldata size.
 
 ```shell
- pc 	op	    opcode		    stack
-----    ------  ------------	--------------	
-[00]	36	    CALLDATASIZE	cds
-[01]	5f	    PUSH0		    0 cds
-[02]	5f	    PUSH0		    0 0 cds
-[03]	37	    CALLDATACOPY	
+| pc   | op     | opcode         | stack              |
+|------|--------|----------------|--------------------|
+| [00] | 36     | CALLDATASIZE   | cds                |
+| [01] | 5f     | PUSH0          | 0 cds              |
+| [02] | 5f     | PUSH0          | 0 0 cds            |
+| [03] | 37     | CALLDATACOPY   |                    |
 ```
 
 ### Step 2: Delegatecall
@@ -151,13 +151,15 @@ To copy the calldata, we need to provide the arguments for the `CALLDATACOPY` op
 To forward the calldata to the delegate call, we need to prepare arguments for the `DELEGATECALL` opcodes, which are `[gas 0xbebe. 0 cds 0 0]`, where `gas` represents the remaining gas, `0xbebe.` represents the address of the implementation contract, and `suc` represents whether the delegatecall is successful. 
 
 ```shell
-[04]	5f	    PUSH0		    0
-[05]	5f	    PUSH0		    0 0
-[06]	36	    CALLDATASIZE	cds 0 0
-[07]	5f	    PUSH0		    0 cds 0 0
-[08]	73bebe.	PUSH20 0xbebe.	0xbebe. 0 cds 0 0
-[1d]	5a	    GAS		        gas 0xbebe. 0 cds 0 0
-[1e]	f4	    DELEGATECALL	suc
+| pc   | op     | opcode         | stack              |
+|------|--------|----------------|--------------------|
+| [04] | 5f     | PUSH0          | 0                  |
+| [05] | 5f     | PUSH0          | 0 0                |
+| [06] | 36     | CALLDATASIZE   | cds 0 0            |
+| [07] | 5f     | PUSH0          | 0 cds 0 0          |
+| [08] | 73bebe.| PUSH20         | 0xbebe. 0 cds 0 0  |
+| [1d] | 5a     | GAS            | gas 0xbebe. 0 cds 0 0|
+| [1e] | f4     | DELEGATECALL   | suc                |
 ```
 
 ### Step 3: Copy the Returned Data from the `DELEGATECALL`
@@ -165,10 +167,12 @@ To forward the calldata to the delegate call, we need to prepare arguments for t
 To copy the returndata, we need to provide the arguments for the `RETURNDATACOPY` opcodes, which are `[0, 0, red]`, where `rds` represents size of returndata from the `DELEGATECALL`.
 
 ```shell
-[1f]	3d	    RETURNDATASIZE	rds suc
-[20]	5f	    PUSH0		    0 rds suc
-[21]	5f	    PUSH0		    0 0 rds suc
-[22]	3e	    RETURNDATACOPY	suc
+| pc   | op     | opcode         | stack              |
+|------|--------|----------------|--------------------|
+| [1f] | 3d     | RETURNDATASIZE | rds suc            |
+| [20] | 5f     | PUSH0          | 0 rds suc          |
+| [21] | 5f     | PUSH0          | 0 0 rds suc        |
+| [22] | 3e     | RETURNDATACOPY | suc                |
 ```
 
 ### Step 4: Return or Revert
@@ -178,14 +182,16 @@ Lastly we need to return the data or revert the transaction based on whether the
  We also need to prepare the argument `[0, rds]` for `REVERT` and `RETURN` opcodes before the `JUMPI`, otherwise we have to prepare them twice. We cannot avoid the `SWAP` operation, because we can only get `rds` after the `DELEGATECALL`.
 
 ```shell
-[23]	5f	    PUSH0		    0 suc
-[24]	3d	    RETURNDATASIZE	rds 0 suc
-[25]	91	    SWAP2		    suc 0 rds
-[26]	602a	PUSH1 0x2a	    0x2a suc 0 rds
-[27]	57	    JUMPI		    0 rds
-[29]	fd	    REVERT
-[2a]	5b	    JUMPDEST		0 rds
-[2b]	f3	    RETURN	
+| pc   | op     | opcode         | stack              |
+|------|--------|----------------|--------------------|
+| [23] | 5f     | PUSH0          | 0 suc              |
+| [24] | 3d     | RETURNDATASIZE | rds 0 suc          |
+| [25] | 91     | SWAP2          | suc 0 rds          |
+| [26] | 602a   | PUSH1          | 0x2a suc 0 rds     |
+| [27] | 57     | JUMPI          | 0 rds              |
+| [29] | fd     | REVERT         |                    |
+| [2a] | 5b     | JUMPDEST       | 0 rds              |
+| [2b] | f3     | RETURN         |                    |
 ```
 
 In the end, we arrived at the runtime code for Minimal Proxy Contract with `PUSH0`: 
