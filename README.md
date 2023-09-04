@@ -1,6 +1,6 @@
 ## Minimal Proxy Contract with `PUSH0`
 
-**Minimal Proxy Contract with `PUSH0`, or `Clone0` in short, optimize the previous minimal proxy contract ([eip-3855](https://eips.ethereum.org/EIPS/eip-3855)) by 200 gas at deployment, 5 gas at runtime, while remaining the same functionalities.**
+**Minimal Proxy Contract with `PUSH0`, or `Clone0` in short, optimize the previous minimal proxy contract ([eip-1167](https://eips.ethereum.org/EIPS/eip-1167)) by 200 gas at deployment, 5 gas at runtime, while remaining the same functionalities.**
 
 ## Motivation
 
@@ -211,7 +211,7 @@ Because the new proxy contract standard uses the `PUSH0` opcode, it can only be 
 
 ## Security Considerations
 
-The new proxy contract standard is identical to the previous one (eip-3855). Here are the security considerations when using minimal proxy contracts:
+The new proxy contract standard is identical to the previous one (eip-1167). Here are the security considerations when using minimal proxy contracts:
 
 Certainly, here's a concise summary of the security considerations for Minimal Proxy Contracts:
 
