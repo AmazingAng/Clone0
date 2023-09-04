@@ -1,10 +1,14 @@
-# Minimal Proxy Contract with `PUSH0`
-
-Author: 0xAA ([@AmazingAng](https://github.com/AmazingAng))
-
-Created: 2023-09-04
-
-Requires: [EIP-7](https://eips.ethereum.org/EIPS/eip-7), [EIP-211](https://eips.ethereum.org/EIPS/eip-211), [EIP-1167](https://eips.ethereum.org/EIPS/eip-1167), [EIP-3855](https://eips.ethereum.org/EIPS/eip-3855)
+---
+title: Minimal Proxy Contract with `PUSH0`
+description: Optimize the previous Minimal Proxy Contract (eip-3855) with newly introduced `PUSH0` opcode
+author: 0xAA (@AmazingAng)
+discussions-to: <URL>
+status: Draft
+type: Standards Track
+category: Core
+created: 2023-09-04
+requires: eip-7, eip-211, eip1167, eip-3855
+---
 
 ## Simple Summary
 
