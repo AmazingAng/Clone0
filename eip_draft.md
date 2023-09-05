@@ -1,25 +1,23 @@
 ---
+eip: minimal-proxy-push0
 title: Minimal Proxy Contract with `PUSH0`
-description: Optimize the previous Minimal Proxy Contract (eip-3855) with newly introduced `PUSH0` opcode
+description: Optimize the previous Minimal Proxy Contract (ERC-1167) with newly introduced `PUSH0` opcode
 author: 0xAA (@AmazingAng)
 discussions-to: https://ethereum-magicians.org/t/proposal-for-a-new-eip-minimal-proxy-contract-with-push0/15662
 status: Draft
 type: Standards Track
 category: Core
 created: 2023-09-04
-requires: eip-7, eip-211, eip1167, eip-3855
+requires: 7, 211, 1167, 3855
 ---
 
-## Simple Summary
-
-With the newly introduced `PUSH0` opcode ([eip-3855](https://eips.ethereum.org/EIPS/eip-3855)) at Shanghai Upgrade, we optimized the previous Minimal Proxy Contract ([eip-1167](https://eips.ethereum.org/EIPS/eip-1167)) from 55 bytes to 54 bytes, which saves 200 gas at deployment and 5 gas at runtime, while remain the same functionalities.
 ## Abstract
 
-Use `PUSH0` opcode minimize gas cost of the previous Minimal Proxy Contract, which simply and cheaply clone contract functionality in an immutable way.
+With the newly introduced `PUSH0` opcode ([EIP-3855](./eip-3855)) at Shanghai Upgrade, we minimized the previous Minimal Proxy Contract ([ERC-1167](./eip-1167)) by 200 gas at deployment and 5 gas at runtime, while retaining same functionalities.
 
 ## Motivation
 
-This standard trys to mimnimize the Minimal Proxy Contract with the newly added `PUSH0` opcodes. The main motivations are:
+This standard tries to optimize the Minimal Proxy Contract with the newly added `PUSH0` opcodes. The main motivations are:
 
 1. Reduce the contract bytecode size by `1` byte by removing a redundant `SWAP` opcode.
 2. Reduce the runtime gas by replacing two `DUP` (cost `3` gas each) to two `PUSH0` (cost `2` gas each).
@@ -125,7 +123,7 @@ contract Clone0Factory {
 
 ## Rationale
 
-The contract is built from [first principals](https://blog.openzeppelin.com/deep-dive-into-the-minimal-proxy-contract) utilizing the newly introduced `PUSH0` opcode. The essential components of the minimal proxy are:
+The contract is built from first principals utilizing the newly introduced `PUSH0` opcode. The essential components of the minimal proxy are:
 
 1. Copy the calldata with `CALLDATACOPY`.
 2. Forward the calldata to the implementation contract using `DELEGATECALL`.
@@ -199,7 +197,7 @@ In the end, we arrived at the runtime code for Minimal Proxy Contract with `PUSH
 365f5f375f5f365f73bebebebebebebebebebebebebebebebebebebebe5af43d5f5f3e5f3d91602a57fd5bf3
 ```
 
-The length of the runtime code is `44` bytes, which reduced `1` byte from the previous Minimal Proxy Contract. Moreover, it replaced the `RETURNDATASIZE` and `DUP` operations with `PUSH0`, which saves gas and increase the readability of the code. In summary, the new Minimal Proxy Contract reduce `200` gas at deployment and `5` gas at runtime, while remain the same functionalities as the old one.
+The length of the runtime code is `44` bytes, which reduced `1` byte from the previous Minimal Proxy Contract. Moreover, it replaced the `RETURNDATASIZE` and `DUP` operations with `PUSH0`, which saves gas and increase the readability of the code. In summary, the new Minimal Proxy Contract reduce `200` gas at deployment and `5` gas at runtime, while remaining same functionalities as the old one.
 
 ##  Backwards Compatibility
 
@@ -214,17 +212,17 @@ Test cases are performed using Foundry, which include:
 - invocation with fixed length return values
 - invocation with variable length return values
 - invocation with revert
-- deploy with minimal creation code (tested on Goerli testnet, [link](https://goerli.etherscan.io/address/0xb4f95ad6256a27a5629d9c4c71bff02bc373c9be#code))
+- deploy with minimal creation code
 
-Tests for these cases are included in the GitHub repo [Minimal Proxy PUSH0](https://github.com/AmazingAng/Minimal-Proxy-PUSH0).
+Tests for these cases are included in the GitHub repo Minimal-Proxy-PUSH0.
 
 ## Reference Implementation
 
-[Minimal Proxy PUSH0](https://github.com/AmazingAng/Minimal-Proxy-PUSH0)
+GitHub Repo: Minimal-Proxy-PUSH0
 
 ## Security Considerations
 
-The new proxy contract standard is identical to the previous one (eip-1167). Here are the security considerations when using minimal proxy contracts:
+The new proxy contract standard is identical to the previous one (ERC-1167). Here are the security considerations when using minimal proxy contracts:
 
 1. **Non-Upgradability**: Minimal Proxy Contracts delegate their logic to another contract (often termed the "implementation" or "logic" contract). This delegation is fixed upon deployment, meaning you can't change which implementation contract the proxy delegates to after its creation.
    
@@ -237,14 +235,4 @@ The new proxy contract standard is identical to the previous one (eip-1167). Her
 
 ## Copyright
 
-Copyright and related rights waived via [CC0](https://github.com/ethereum/EIPs/blob/LICENSE.md).
-
-## Reference
-
-1. Peter Murray (@yarrumretep), Nate Welch (@flygoing), Joe Messerman (@JAMesserman), "ERC-1167: Minimal Proxy Contract," Ethereum Improvement Proposals, no. 1167, June 2018. [Online serial]. Available: https://eips.ethereum.org/EIPS/eip-1167.
-
-2. Alex Beregszaszi (@axic), Hugo De la cruz (@hugo-dc), Paweł Bylica (@chfast), "EIP-3855: PUSH0 instruction," Ethereum Improvement Proposals, no. 3855, February 2021. [Online serial]. Available: https://eips.ethereum.org/EIPS/eip-3855.
-
-3. Martin Abbatemarco, Deep dive into the Minimal Proxy contract, https://blog.openzeppelin.com/deep-dive-into-the-minimal-proxy-contract
-
-4. 0age, The More-Minimal Proxy, https://medium.com/@0age/the-more-minimal-proxy-5756ae08ee48
+Copyright and related rights waived via [CC0](../LICENSE.md).
