@@ -2,7 +2,7 @@
 title: Minimal Proxy Contract with `PUSH0`
 description: Optimize the previous Minimal Proxy Contract (eip-3855) with newly introduced `PUSH0` opcode
 author: 0xAA (@AmazingAng)
-discussions-to: <URL>
+discussions-to: https://ethereum-magicians.org/t/proposal-for-a-new-eip-minimal-proxy-contract-with-push0/15662
 status: Draft
 type: Standards Track
 category: Core
@@ -12,8 +12,7 @@ requires: eip-7, eip-211, eip1167, eip-3855
 
 ## Simple Summary
 
-With the newly introduced `PUSH0` opcode ([eip-3855](https://eips.ethereum.org/EIPS/eip-3855)) at Shanghai Upgrade, we minimized the previous Minimal Proxy Contract ([eip-1167](https://eips.ethereum.org/EIPS/eip-1167)) by 200 gas at deployment and 5 gas at runtime, while remain the same functionalities.
-
+With the newly introduced `PUSH0` opcode ([eip-3855](https://eips.ethereum.org/EIPS/eip-3855)) at Shanghai Upgrade, we optimized the previous Minimal Proxy Contract ([eip-1167](https://eips.ethereum.org/EIPS/eip-1167)) from 55 bytes to 54 bytes, which saves 200 gas at deployment and 5 gas at runtime, while remain the same functionalities.
 ## Abstract
 
 Use `PUSH0` opcode minimize gas cost of the previous Minimal Proxy Contract, which simply and cheaply clone contract functionality in an immutable way.
@@ -222,6 +221,19 @@ Tests for these cases are included in the GitHub repo [Minimal Proxy PUSH0](http
 ## Reference Implementation
 
 [Minimal Proxy PUSH0](https://github.com/AmazingAng/Minimal-Proxy-PUSH0)
+
+## Security Considerations
+
+The new proxy contract standard is identical to the previous one (eip-1167). Here are the security considerations when using minimal proxy contracts:
+
+1. **Non-Upgradability**: Minimal Proxy Contracts delegate their logic to another contract (often termed the "implementation" or "logic" contract). This delegation is fixed upon deployment, meaning you can't change which implementation contract the proxy delegates to after its creation.
+   
+2. **Initialization Concerns**: Proxy contracts lack constructors, so you need to use an initialization function after deployment. Skipping this step could leave the contract unsafe.
+
+3. **Safety of Logic Contract**: Vulnerabilities in the logic contract affect all associated proxy contracts.
+
+4. **Transparency Issues**: Because of its complexity, users might see the proxy as an empty contract, making it challenging to trace back to the actual logic contract.
+
 
 ## Copyright
 
