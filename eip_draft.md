@@ -1,19 +1,19 @@
 ---
-eip: minimal-proxy-push0
+eip: 7511
 title: Minimal Proxy Contract with `PUSH0`
-description: Optimize the previous Minimal Proxy Contract (ERC-1167) with newly introduced `PUSH0` opcode
-author: 0xAA (@AmazingAng)
-discussions-to: https://ethereum-magicians.org/t/proposal-for-a-new-eip-minimal-proxy-contract-with-push0/15662
+description: Optimize the previous Minimal Proxy Contract (ERC-1167) with the newly introduced `PUSH0` opcode
+author: 0xAA (@AmazingAng), vectorized (@Vectorized), 0age (@0age)
+discussions-to: https://ethereum-magicians.org/t/erc-7511-minimal-proxy-contract-with-push0/15662
 status: Draft
 type: Standards Track
-category: Core
+category: ERC
 created: 2023-09-04
 requires: 7, 211, 1167, 3855
 ---
 
 ## Abstract
 
-With the newly introduced `PUSH0` opcode ([EIP-3855](./eip-3855)) at Shanghai Upgrade, we minimized the previous Minimal Proxy Contract ([ERC-1167](./eip-1167)) by 200 gas at deployment and 5 gas at runtime, while retaining same functionalities.
+With the newly introduced `PUSH0` opcode ([EIP-3855](./eip-3855)) at Shanghai Upgrade, we optimized the previous Minimal Proxy Contract ([ERC-1167](./eip-1167)) by 200 gas at deployment and 5 gas at runtime, while retaining same functionalities.
 
 ## Motivation
 
@@ -199,11 +199,11 @@ In the end, we arrived at the runtime code for Minimal Proxy Contract with `PUSH
 
 The length of the runtime code is `44` bytes, which reduced `1` byte from the previous Minimal Proxy Contract. Moreover, it replaced the `RETURNDATASIZE` and `DUP` operations with `PUSH0`, which saves gas and increase the readability of the code. In summary, the new Minimal Proxy Contract reduce `200` gas at deployment and `5` gas at runtime, while remaining same functionalities as the old one.
 
-##  Backwards Compatibility
+## Backwards Compatibility
 
 Because the new minimal proxy contract uses `PUSH0` opcode, it can only be deployed after Shanghai Upgrade. It behaves the same as previous Minimal Proxy Contract.
 
-##  Test Cases
+## Test Cases
 
 Test cases are performed using Foundry, which include:
 
