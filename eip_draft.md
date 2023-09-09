@@ -154,7 +154,7 @@ To forward the calldata to the delegate call, we need to prepare arguments for t
 
 ### Step 3: Copy the Returned Data from the `DELEGATECALL`
 
-To copy the returndata, we need to provide the arguments for the `RETURNDATACOPY` opcodes, which are `[0, 0, red]`, where `rds` represents size of returndata from the `DELEGATECALL`.
+To copy the returndata, we need to provide the arguments for the `RETURNDATACOPY` opcodes, which are `[0, 0, rds]`, where `rds` represents size of returndata from the `DELEGATECALL`.
 
 | pc   | op     | opcode         | stack              |
 |------|--------|----------------|--------------------|
