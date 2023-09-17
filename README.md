@@ -24,7 +24,7 @@ Test cases are performed using Foundry, which includes:
 You need to install [foundry](https://book.getfoundry.sh/getting-started/installation) to run the following test command:
 
 ```
-forge test
+forge test --evm-version shanghai
 ```
 
 ## Specification
