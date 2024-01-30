@@ -13,13 +13,12 @@ requires: 7, 211, 1167, 3855
 
 ## Abstract
 
-With the `PUSH0` opcode ([EIP-3855](./eip-3855.md)), introduced with the Shanghai upgrade, we optimized the previous Minimal Proxy Contract ([ERC-1167](./eip-1167.md)) by 200 gas at deployment and 5 gas at runtime, while retaining the same functionality.
+With the `PUSH0` opcode ([EIP-3855](./eip-3855.md)) introduced with the Shanghai upgrade, the previous Minimal Proxy Contract ([ERC-1167](./eip-1167.md)) cen be further optimized. We provides two starndard optimized Minimal Proxy Contract with `PUSH0`: `Clone044` optimized for deployment cost, saving 200 gas at deployment and 5 gas at runtime; `Clone045` optimized for runtime cost, saving 8 gas at runtime.
 
 ## Motivation
 
-
-1. Reduce the contract bytecode size by `1` byte by removing a redundant `SWAP` opcode.
-2. Reduce the runtime gas by replacing two `DUP` (cost `3` gas each) with two `PUSH0` (cost `2` gas each).
+1. Reduce the contract bytecode size.
+2. Reduce the runtime gas by replacing `DUP` (cost `3` gas each) with `PUSH0` (cost `2` gas each).
 3. Increase the readability of the proxy contract by redesigning it from first principles with `PUSH0`.
 
 ## Specification
